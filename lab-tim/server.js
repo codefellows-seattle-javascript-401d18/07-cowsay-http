@@ -3,20 +3,17 @@
 const http = require('http');
 const url = require('url');
 const querystring = require('querystring');
+const cowsay = require('cowsay');
+const bodyParse = require('./lib/body-parser');
+const PORT = process.env.PORT || 3000;
 
-// callback should be (err, body) => undefined
-const bodyParse = (req, callback) => {
-  if (req.method === 'POST' || req.method === 'PUT') {
-    let body = '';
-    req.on('data', (buf) => {
-      body += buf.toString();
-    });
-    req.on('end', () => callback(null, body));
-    req.on('error', (err) => callback(err));
-  } else {
-    callback(null, '{}');
-  }
-};
+// GET on /
+// POST on /
+// GET on /cowsay
+// POST on /cowsay
+// GET on /cowsay?text=message
+// POST on /cowsay?text=message
+
 
 const server = module.exports = http.createServer((req, res) => {
   req.url = url.parse(req.url);
@@ -41,25 +38,60 @@ const server = module.exports = http.createServer((req, res) => {
 
     // respond with a 200 status code and yay
 
-    // if the pathname is /time and a GET req send back the date
-    if (req.method === 'GET' && req.url.pathname === '/time') {
+    // if the pathname is /cowsay and a GET req send back the date
+    if (req.method === 'GET' && req.url.pathname === '/cowsay') {
+      if (req.url.query) {
+        res.writeHead(200, {
+          'Content-Type': 'text/plain',
+        });
+        res.write(cowsay({ text: req.url.query}));
+        res.end();
+        return;
+      } else if (!req.url.query) {
+        res.writeHead(400, {
+          'Content-Type': 'text/plain',
+        });
+        res.write(cowsay({ text: 'bad request'}));
+        res.end();
+        return;
+      }
+    }
+
+    // if the pathname is /cowsay and a POST req send back their body as json
+    if (req.method === 'POST' && req.url.pathname === '/cowsay') {
+      if (req.url.query) {
+        res.writeHead(200, {
+          'Content-Type': 'text/plain',
+        });
+        res.write(cowsay({ text: req.url.query}));
+        res.end();
+        return;
+      } else if (!req.url.query) {
+        res.writeHead(400, {
+          'Content-Type': 'text/plain',
+        });
+        res.write(cowsay({ text: 'bad request'}));
+        res.end();
+        return;
+      }
+    }
+
+    // if the pathname is / and a GET req send back
+    if (req.method === 'GET' && req.url.pathname === '/') {
       res.writeHead(200, {
-        'Content-Type': 'application/json',
+        'Content-Type': 'text/plain',
       });
-      res.write(JSON.stringify({
-        now: Date.now(),
-        date: new Date(),
-      }));
+      res.write('hello from my server!');
       res.end();
       return;
     }
 
-    // if the pathname is /echo and a POST req send back their body as json
-    if (req.method === 'POST' && req.url.pathname === '/echo') {
+    // if the pathname is / and a POST req send back
+    if (req.method === 'POST' && req.url.pathname === '/') {
       res.writeHead(200, {
-        'Content-Type': 'application/json',
+        'Content-Type': 'text/plain',
       });
-      res.write(JSON.stringify(req.body));
+      res.write('hello from my server!');
       res.end();
       return;
     }
@@ -71,6 +103,6 @@ const server = module.exports = http.createServer((req, res) => {
 
 });
 
-server.listen(3000, () => {
-  console.log('server up :: 3000');
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
