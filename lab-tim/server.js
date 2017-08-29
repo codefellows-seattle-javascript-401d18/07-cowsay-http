@@ -7,14 +7,6 @@ const cowsay = require('cowsay');
 const bodyParse = require('./lib/body-parser');
 const PORT = process.env.PORT || 3000;
 
-// GET on /
-// POST on /
-// GET on /cowsay
-// POST on /cowsay
-// GET on /cowsay?text=message
-// POST on /cowsay?text=message
-
-
 const server = module.exports = http.createServer((req, res) => {
   req.url = url.parse(req.url);
   req.url.query = querystring.parse(req.url.query);
@@ -36,71 +28,54 @@ const server = module.exports = http.createServer((req, res) => {
       return;
     }
 
-    // respond with a 200 status code and yay
-
-    // if the pathname is /cowsay and a GET req send back the date
     if (req.method === 'GET' && req.url.pathname === '/cowsay') {
-      if (req.url.query) {
-        res.writeHead(200, {
-          'Content-Type': 'text/plain',
-        });
-        res.write(cowsay({ text: req.url.query}));
+      let query = req.url.query;
+      if (query !== null) {
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.write(cowsay.say({text: query, e: 'oO', T: 'U '}));
         res.end();
-        return;
-      } else if (!req.url.query) {
-        res.writeHead(400, {
-          'Content-Type': 'text/plain',
-        });
-        res.write(cowsay({ text: 'bad request'}));
+        // return;
+      } else {
+        res.writeHead(400, {'Content-Type': 'text/plain'});
+        res.write(cowsay.say({text: 'bad request'}));
         res.end();
-        return;
+        // return;
       }
     }
 
-    // if the pathname is /cowsay and a POST req send back their body as json
     if (req.method === 'POST' && req.url.pathname === '/cowsay') {
-      if (req.url.query) {
-        res.writeHead(200, {
-          'Content-Type': 'text/plain',
-        });
-        res.write(cowsay({ text: req.url.query}));
+      let query = req.url.query;
+      if (query !== null) {
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.write(cowsay.say({text: query, e: 'oO', T: 'U '}));
         res.end();
-        return;
-      } else if (!req.url.query) {
-        res.writeHead(400, {
-          'Content-Type': 'text/plain',
-        });
-        res.write(cowsay({ text: 'bad request'}));
+        // return;
+      } else {
+        res.writeHead(400, {'Content-Type': 'text/plain'});
+        res.write(cowsay.say({text: 'bad request'}));
         res.end();
-        return;
+        // return;
       }
     }
 
-    // if the pathname is / and a GET req send back
     if (req.method === 'GET' && req.url.pathname === '/') {
-      res.writeHead(200, {
-        'Content-Type': 'text/plain',
-      });
+      res.writeHead(200, {'Content-Type': 'text/plain'});
       res.write('hello from my server!');
       res.end();
-      return;
+      // return;
     }
 
-    // if the pathname is / and a POST req send back
     if (req.method === 'POST' && req.url.pathname === '/') {
-      res.writeHead(200, {
-        'Content-Type': 'text/plain',
-      });
+      res.writeHead(200, {'Content-Type': 'text/plain'});
       res.write('hello from my server!');
       res.end();
-      return;
+      // return;
     }
 
     // otherwise 404
     res.writeHead(404);
     res.end();
   });
-
 });
 
 server.listen(PORT, () => {
