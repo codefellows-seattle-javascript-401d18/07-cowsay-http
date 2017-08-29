@@ -1,12 +1,12 @@
-'use strict'
+'use strict';
 
-const server = require('../server.js')
-const superagent = require('superagent')
+const server = require('../server.js');
+const superagent = require('superagent');
 
 describe('Testing the server file', function () {
   afterAll((done) => {
-    server.close(done)
-  })
+    server.close(done);
+  });
 
   describe('POST method, /echo endpoint', () => {
     test('should return a status code of 200', done => {
@@ -14,22 +14,22 @@ describe('Testing the server file', function () {
         .send({'value': 'scott-is-awesome'})
         .set('Content-Type', 'application/json')
         .end((err, res) => {
-          expect(err).toBeNull()
-          expect(res.status).toBe(200)
-          done()
-        })
-    })
+          expect(err).toBeNull();
+          expect(res.status).toBe(200);
+          done();
+        });
+    });
 
     test('should respond with user input', done => {
       superagent.post('localhost:3000/echo')
         .send({'value': 'scott'})
         .set('Content-Type', 'application/json')
         .end((err, res) => {
-          expect(err).toBeNull()
-          expect(res.body.value).toEqual('scott')
-          done()
-        })
-    })
+          expect(err).toBeNull();
+          expect(res.body.value).toEqual('scott');
+          done();
+        });
+    });
 
 
     test('undefined endpoint', done => {
@@ -37,12 +37,12 @@ describe('Testing the server file', function () {
         .send({'value': 'scott'})
         .set('Content-Type', 'application/json')
         .end((err, res) => {
-          expect(err).not.toBeNull()
-          expect(res.status).toBe(404)
-          done()
-        })
-    })
-  })
+          expect(err).not.toBeNull();
+          expect(res.status).toBe(404);
+          done();
+        });
+    });
+  });
 
   describe('GET method, /time endpoint', () => {
     test('should return a status code of 200', done => {

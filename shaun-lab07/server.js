@@ -70,7 +70,7 @@ const server = http.createServer(function(req, res) {
   //   console.log('server up :: 3000')
   // })
 
-if (req.method === 'POST' && req.url.pathname ==='/cowsay') {
+  if (req.method === 'POST' && req.url.pathname ==='/cowsay') {
     parseBody(req, function(err) {
       if (req.body.text) {
         res.writeHead(200, { 'Content-Type': 'text/plain'});
