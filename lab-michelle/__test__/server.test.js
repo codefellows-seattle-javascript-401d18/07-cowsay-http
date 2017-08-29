@@ -8,88 +8,79 @@ describe('Testing the server file', function () {
     server.close(done);
   });
 
-  describe('POST method, /echo endpoint', () => {
+  //TESTS FOR /ENDPOINT
+  //SLASH ENDPOINT, POST
+  describe('POST method, / endpoint', () => {
     test('should return a status code of 200', done => {
-      superagent.post('localhost:3000/echo')
-        .send({'value': 'scott-is-awesome'})
-        .set('Content-Type', 'application/json')
-        .end((err, res) => {
-          expect(err).toBeNull();
-          expect(res.status).toBe(200);
-          done();
-        });
-    });
-
-
-
-
-
-
-
-  describe('POST method, /echo endpoint', () => {
-    test('should return a status code of 200', done => {
-      superagent.post('localhost:3000/echo')
-        .send({'value': 'scott-is-awesome'})
-        .set('Content-Type', 'application/json')
-        .end((err, res) => {
-          expect(err).toBeNull();
-          expect(res.status).toBe(200);
-          done();
-        });
-    });
-
-    test('should respond with user input', done => {
-      superagent.post('localhost:3000/echo')
-        .send({'value': 'scott'})
-        .set('Content-Type', 'application/json')
-        .end((err, res) => {
-          expect(err).toBeNull();
-          expect(res.body.value).toEqual('scott');
-          done();
-        });
-    });
-
-
-    test('undefined endpoint', done => {
       superagent.post('localhost:3000/')
-        .send({'value': 'scott'})
-        .set('Content-Type', 'application/json')
+        .send('hello from my server!')
+        .set('Content-Type', 'text/plain')
         .end((err, res) => {
-          expect(err).not.toBeNull();
-          expect(res.status).toBe(404);
+          expect(err).toBeNull();
+          expect(res.status).toBe(200);
           done();
         });
     });
   });
-
-  describe('GET method, /time endpoint', () => {
+  //SLASH ENDPOINT, PUT
+  describe('PUT method, / endpoint', () => {
     test('should return a status code of 200', done => {
-      superagent.get('localhost:3000/time')
-        .set('Content-Type', 'application/json')
+      superagent.post('localhost:3000/')
+        .send('hello from my server!')
+        .set('Content-Type', 'text/plain')
         .end((err, res) => {
           expect(err).toBeNull();
           expect(res.status).toBe(200);
           done();
         });
     });
-
-    test('should respond with the current date', done => {
-      superagent.get('localhost:3000/time')
-        .type('application/json')
+  });
+  //SLASH ENDPOINT, GET
+  describe('GET method, / endpoint', () => {
+    test('should return a status code of 200', done => {
+      superagent.post('localhost:3000/')
+        .set('Content-Type', 'text/plain')
         .end((err, res) => {
           expect(err).toBeNull();
-          expect(res.body).toHaveProperty('now');
-          expect(res.body).toHaveProperty('date');
+          expect(res.status).toBe(200);
           done();
         });
     });
-
-    test('undefined endpoint', done => {
-      superagent.get('localhost:3000/')
-        .set('Content-Type', 'application/json')
+  });
+  //SLASH ENDPOINT, DELETE//
+  describe('DEL method, / endpoint', () => {
+    test('should return a status code of 200', done => {
+      superagent.post('localhost:3000/')
+        .set('Content-Type', 'text/plain')
         .end((err, res) => {
-          expect(err).not.toBeNull();
-          expect(res.status).toBe(404);
+          expect(err).toBeNull();
+          expect(res.status).toBe(200);
+          done();
+        });
+    });
+  });
+  //SLASH COWSAY, POST
+  describe('POST method, /cowsay', () => {
+    test('should return a status code of 200', done => {
+      superagent.post('localhost:3000/echo')
+        .send({'value': 'scott-is-awesome'})
+        .set('Content-Type', 'text/plain')
+        .end((err, res) => {
+          expect(err).toBeNull();
+          expect(res.status).toBe(200);
+          done();
+        });
+    });
+  });
+  //SLASH COWSAY, POST
+  describe('POST method, /cowsay', () => {
+    test('should return a status code of 200', done => {
+      superagent.post('localhost:3000/echo')
+        .send({'value': 'scott-is-awesome'})
+        .set('Content-Type', 'text/plain')
+        .end((err, res) => {
+          expect(err).toBeNull();
+          expect(res.status).toBe(200);
           done();
         });
     });
