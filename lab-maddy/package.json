@@ -1,8 +1,8 @@
 {
-  "name": "Madeline",
+  "name": "01-http",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "directories": {
     "lib": "lib"
   },
@@ -21,6 +21,8 @@
     }
   },
   "scripts": {
+    "start": "node server.js",
+    "start:watch": "nodemon server.js",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "lint": "eslint .",
@@ -34,6 +36,7 @@
     "jest": "^20.0.4"
   },
   "dependencies": {
+    "superagent": "^3.6.0",
     "uuid": "^3.1.0"
   }
 }

@@ -9,3 +9,14 @@ Brief description of you app
 - How to interact with the endpoints
   - Sample requests and example responses
   - _note: use a code block to show the HTTPie and response format_
+
+
+
+  - npm install
+  - npm install httpie
+  - npm install superagent
+  - npm install uuid??
+  - node server.js
+  - npm install jest
+  - nc localhost 3000
+  - npm install cowsay
