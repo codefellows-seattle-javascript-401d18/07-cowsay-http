@@ -28,7 +28,6 @@ const server = module.exports = http.createServer((req, res) => {
       res.end();
       return;
     }
-
     // parse the body as json
     try {
       req.body = JSON.parse(body);
@@ -38,31 +37,29 @@ const server = module.exports = http.createServer((req, res) => {
       res.end();
       return;
     }
-
     // respond with a 200 status code and yay
 
-    // if the pathname is /time and a GET req send back the date
-    if (req.method === 'GET' && req.url.pathname === '/time') {
+    // if the pathname is / and a GET req send back "hello from the server"
+    if (req.method === 'GET' && req.url.pathname === '/') {
       res.writeHead(200, {
         'Content-Type': 'application/json',
       });
       res.write(JSON.stringify({
-        now: Date.now(),
-        date: new Date(),
+        message: 'hello from my server',
       }));
       res.end();
       return;
     }
-
-    // if the pathname is /echo and a POST req send back their body as json
-    if (req.method === 'POST' && req.url.pathname === '/echo') {
-      res.writeHead(200, {
-        'Content-Type': 'application/json',
-      });
-      res.write(JSON.stringify(req.body));
-      res.end();
-      return;
-    }
+    //
+    // // if the pathname is /echo and a POST req send back their body as json
+    // if (req.method === 'POST' && req.url.pathname === '/echo') {
+    //   res.writeHead(200, {
+    //     'Content-Type': 'application/json',
+    //   });
+    //   res.write(JSON.stringify(req.body));
+    //   res.end();
+    //   return;
+    // }
 
     // otherwise 404
     res.writeHead(404);
