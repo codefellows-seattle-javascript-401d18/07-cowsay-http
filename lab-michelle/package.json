@@ -1,0 +1,26 @@
+{
+  "name": "lab-michelle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "cowsay": "^1.2.1",
+    "nodemon": "^1.11.0",
+    "superagent": "^3.6.0",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.5.0",
+    "jest": "^20.0.4"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "start:watch": "nodemon server.js",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "lint": "eslint .",
+    "lint:test": "npm run lint && npm test"
+  },
+  "author": "Michelle S",
+  "license": "MIT"
+}
