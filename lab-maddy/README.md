@@ -12,12 +12,11 @@ Brief description of you app
 
 
 
-
-  - npm install
+  - npm install- DONE
   - npm install httpie
   - npm install superagent
-  - npm install uuid??
-  - node server.js
+  - npm install uuid ???
+  - npm install cowsay- DONE
   - npm install jest
+  - node server.js
   - nc localhost 3000
-  - npm install cowsay

@@ -3,16 +3,19 @@
 const server = require('../server.js');
 const superagent = require('superagent');
 
+
+//
 describe('Testing the server file', function () {
   afterAll((done) => {
     server.close(done);
   });
 
+  //POST
   describe('POST method, /echo endpoint', () => {
     test('should return a status code of 200', done => {
       superagent.post('localhost:3000/echo')
-        .send({'value': 'scott-is-awesome'})
-        .set('Content-Type', 'application/json')
+        .send('hello from my server!')
+        .set('Content-Type', 'text/plain')
         .end((err, res) => {
           expect(err).toBeNull();
           expect(res.status).toBe(200);
@@ -22,20 +25,19 @@ describe('Testing the server file', function () {
 
     test('should respond with user input', done => {
       superagent.post('localhost:3000/echo')
-        .send({'value': 'scott'})
-        .set('Content-Type', 'application/json')
+        .send('hello from my server!')
+        .set('Content-Type','text/plain')
         .end((err, res) => {
           expect(err).toBeNull();
-          expect(res.body.value).toEqual('scott');
+          expect(res.body.value).toEqual('hello from my server!');
           done();
         });
     });
 
-
     test('undefined endpoint', done => {
       superagent.post('localhost:3000/')
-        .send({'value': 'scott'})
-        .set('Content-Type', 'application/json')
+        .send('hello from my server!')
+        .set('Content-Type', 'text/plain')
         .end((err, res) => {
           expect(err).not.toBeNull();
           expect(res.status).toBe(404);
@@ -44,10 +46,11 @@ describe('Testing the server file', function () {
     });
   });
 
+  //GET
   describe('GET method, /time endpoint', () => {
     test('should return a status code of 200', done => {
       superagent.get('localhost:3000/time')
-        .set('Content-Type', 'application/json')
+        .set('Content-Type', 'text/plain')
         .end((err, res) => {
           expect(err).toBeNull();
           expect(res.status).toBe(200);
@@ -57,7 +60,7 @@ describe('Testing the server file', function () {
 
     test('should respond with the current date', done => {
       superagent.get('localhost:3000/time')
-        .type('application/json')
+        .set('Content-Type','text/plain')
         .end((err, res) => {
           expect(err).toBeNull();
           expect(res.body).toHaveProperty('now');
@@ -68,7 +71,7 @@ describe('Testing the server file', function () {
 
     test('undefined endpoint', done => {
       superagent.get('localhost:3000/')
-        .set('Content-Type', 'application/json')
+        .set('Content-Type', 'hello from my server!')
         .end((err, res) => {
           expect(err).not.toBeNull();
           expect(res.status).toBe(404);
@@ -77,6 +80,10 @@ describe('Testing the server file', function () {
     });
   });
 });
+
+// PUT
+
+// DELETE
 
 
 //----- CLASS NOTES-------
