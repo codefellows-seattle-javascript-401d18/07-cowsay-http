@@ -24,6 +24,12 @@ Your lab directory must include
 * `README.md`
 
 #### Feature Tasks  
+* documentation: 
+  - Brief description of you app
+  - How to install / get started with your app
+  - How to interact with the endpoints
+    - Sample requests and example responses
+    - _note: use a code block to show the HTTPie and response format_
 * create an HTTP Server using the NodeJS `http` module
 * create a *custom* body parsing module that is used for parsing the body of all **POST** and **PUT** requests
 * for **ALL** requests made to `/`, the server should respond with the following:
@@ -57,5 +63,10 @@ Your lab directory must include
 * write tests that validate any malformed reqeusts to `/cowsay` and assert that the **400** response is received, including the cowsay response message
   - Do not neglect the request body format required for the text message
 
-## Bonus
+#### Bonus
 * **2pts:** add the ability to change the cowfile - **ex: dragon, sheep, etc** _(note: this should be done through the querystring)_
+
+## Rubric 10pts
+* Documentation: 2pts
+* Feature Tasks: 5pts
+* Tests: 3pts
