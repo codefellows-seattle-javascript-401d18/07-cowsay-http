@@ -37,7 +37,7 @@ Your lab directory must include
   * a status code of **200**
   * a response with the string "hello from my server!"
 * for all **GET** requests made to `/cowsay`, the server should respond with the following:
-  * the query string should have the key value `text=message`
+  * _note: the query string should have the key value `text=message`_
   * the response header should include `Content-Type: text/plain`
   * if the query `text=messsage` is set, respond with:
     * a status code of **200**
