@@ -3,6 +3,8 @@
 const http = require('http');
 const url = require('url');
 const querystring = require('querystring');
+const cowsay = require('cowsay');
+
 
 // callback should be (err, body) => undefined
 const bodyParse = (req, callback) => {
@@ -10,6 +12,8 @@ const bodyParse = (req, callback) => {
     let body = '';
     req.on('data', (buf) => {
       body += buf.toString();
+      console.log('this is buffer',buf.toString());
+      console.log(body, 'body');
     });
     req.on('end', () => callback(null, body));
     req.on('error', (err) => callback(err));
@@ -54,6 +58,53 @@ const server = module.exports = http.createServer((req, res) => {
       return;
     }
 
+    //If User GET with /
+    if (req.method === 'GET' && req.url.pathname === '/') {
+      res.writeHead(200, {
+        'Content-Type': 'text/plain',
+      });
+      res.write(JSON.stringify('Hello from my server!'));
+      res.end();
+      return;
+    }
+
+    //If user POST with /
+    if (req.method === 'POST' && req.url.pathname === '/') {
+      res.writeHead(200, {
+        'Content-Type': 'text/plain',
+      });
+      res.write(JSON.stringify('Hello from my server!'));
+      res.end();
+      return;
+    }
+
+    //GET from cowsay
+    if (req.method === 'GET' && req.url.pathname === '/cowsay') {
+      if(req.url.query.text){
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.write(cowsay.say({
+          text: JSON.stringify(req.url.query.text),
+        }));
+        res.end();
+        return;
+      } else {
+        res.writeHead(400, {'Content-Type': 'text/plain'});
+        res.write(cowsay.say({
+          text: `bad request`,
+        }));
+        res.end();
+        return;
+      }
+    }
+
+    //POST from cowsay
+    if(req.method === 'POST' && req.url.pathname === '/cowsay') {
+
+      res.writeHead(200, {'Content-Type': 'text/plain'});
+      res.write(cowsay.say({text: JSON.stringify(req.body.text)}));
+      res.end();
+      return;
+    }
     // if the pathname is /echo and a POST req send back their body as json
     if (req.method === 'POST' && req.url.pathname === '/echo') {
       res.writeHead(200, {
