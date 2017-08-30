@@ -1,10 +1,10 @@
-# c*ChatterBox*
+# *What did the cow say?*
 
-# Join ChatterBox today to join the greatest chat room ever.
+# Server request and response demonstration.
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 
 ## Project Description
-Using node.js and net I have created a TCP Chat Server which you can join with NoCat. Inside the chat room you can talk to your friends as a group, direct message certain users, and even change your own username.
+Using node.js, HTTP, superagent, cowsay, and querystring I have created a Server that responds to different GET and POST responses from users.
 
 ## Table of Contents
 + [Installation](#installation)
@@ -18,14 +18,20 @@ Using node.js and net I have created a TCP Chat Server which you can join with N
   + Navigate to the folder where you did your git clone with your newly forked repository.
   + Make sure you are in the root directory IE. lab-gavin.;
   + Type npm i into your terminal.
-+ Now type nodemon server.js into your terminal
-+ Your server is now up and running.
-+ You can open a new terminal tab and type nc localhost 3000 to create a new user;
-+ The following commands are the only way to use ChatterBox. (Updates to come)
-  + @nickname newNickname will change your nickname to "newNickname".
-  + @all Hi, I'm Gavin will write "Hi, I'm Gavin" to everyone in the chat room.
-  + @dm Gavin Hi, Gavin will send a direct message to the user Gavin of "Hi, Gavin".
-  + @exit will end your chat session.   
++ Open two terminal windows.
++ In the firt terminal type
+  + `npm run start:watch`
+  + This creates a local server which should log to the console
+    + `server up:: 3000`
++ In the second terminal window
+  + `brew install httpie`
+  + This installs httpie which is a package that allows you to make calls to our local server.
+  + Here are a list of commands you may use with httpie.
+    + `http GET localhost:3000/` will return 'Hello from my server!'   
+    + `http PUT localhost:3000/` will return 'Hello from my server!'  
+    + `http GET localhost:3000/cowsay text=hi` will return a beautiful cow saying "hi".
+    + `http PUT localhost:3000/cowsay text=hi` will return a beautiful cow saying "hi".
+    + `http GET localhost:3000/cowsay/monkeys text=hi` will return 404.
 
 ### Usage
 This app is completely free to be used however you'd like!
