@@ -32,12 +32,12 @@ const server = module.exports = http.createServer((req, res) => {
       let query = req.url.query;
       if (query.text) {
         res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say({text: query.text, e: 'oO', T: 'U '}));
+        res.write(cowsay.say({text: query.text, f: 'dragon'}));
         res.end();
         // return;
       } else {
         res.writeHead(400, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say({text: 'bad request', e: 'DD', T: ';;'}));
+        res.write(cowsay.say({text: 'bad request', f: 'dragon'}));
         res.end();
         // return;
       }
@@ -47,12 +47,12 @@ const server = module.exports = http.createServer((req, res) => {
       console.log(req.body);
       if (req.body.text) {
         res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say({text: req.body.text, e: 'oO', T: 'U '}));
+        res.write(cowsay.say({text: req.body.text, f: 'dragon'}));
         res.end();
         // return;
       } else {
         res.writeHead(400, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say({text: 'bad request', e: 'DD', T: ';;'}));
+        res.write(cowsay.say({text: 'bad request', f: 'dragon'}));
         res.end();
         // return;
       }
