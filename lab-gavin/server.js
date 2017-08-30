@@ -12,8 +12,6 @@ const bodyParse = (req, callback) => {
     let body = '';
     req.on('data', (buf) => {
       body += buf.toString();
-      console.log('this is buffer',buf.toString());
-      console.log(body, 'body');
     });
     req.on('end', () => callback(null, body));
     req.on('error', (err) => callback(err));
@@ -80,11 +78,11 @@ const server = module.exports = http.createServer((req, res) => {
 
     //GET from cowsay
     if (req.method === 'GET' && req.url.pathname === '/cowsay') {
-      if(req.url.query.text){
-        console.log('in get cowsay');
+      let query = req.url.query;
+      if(query.text){
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.write(cowsay.say({
-          text: JSON.stringify(req.url.query.text),
+          text: (req.url.query),
         }));
         res.end();
         return;
@@ -100,8 +98,6 @@ const server = module.exports = http.createServer((req, res) => {
 
     //POST from cowsay
     if(req.method === 'POST' && req.url.pathname === '/cowsay') {
-      console.log('inside post cowsay');
-
       res.writeHead(200, {'Content-Type': 'text/plain'});
       res.write(cowsay.say({text: JSON.stringify(req.body.text)}));
       res.end();

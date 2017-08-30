@@ -113,10 +113,12 @@ describe('Testing the server file', function () {
   describe('POST method, / endpoint', () => {
     test('should return a status code of 200', done => {
       superagent.post('localhost:3000/')
-        .set('Content-Type', 'text/plain')
+        .type('application/json')
+        .send({'text': 'Hi, Im Cow'})
         .end((err, res) => {
-          expect(err).not.toBeNull();
-          expect(res.status).toBe(400);
+          expect(err).toBeNull();
+          expect(res.status).toBe(200);
+          expect(res.text).toEqual(JSON.stringify('Hello from my server!'));
           done();
         });
     });
@@ -168,7 +170,7 @@ describe('Testing the server file', function () {
         .send({'text': 'Hi, Im Cow'})
         .type('application/json')
         .end((err, res) => {
-          // expect(res.status).toBe(200);
+          expect(res.status).toBe(400);
           expect(res.text).toEqual(cowsay.say({ text: 'bad request' }));
           done();
         });
