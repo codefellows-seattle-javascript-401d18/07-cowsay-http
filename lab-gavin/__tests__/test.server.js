@@ -156,11 +156,12 @@ describe('Testing the server file', function () {
     });
 
     test('When passing nothing after /cowsay should return 400', done => {
-      superagent.get('localhost:3000/cowsay')
+      superagent.get('localhost:3000/cowsay?text=Hi')
         .type('text/plain')
         .end((err, res) => {
-          expect(err).not.toBeNull();
-          expect(res.status).toEqual(400);
+          expect(err).toBeNull();
+          expect(res.status).toEqual(200);
+          expect(res.text).toEqual(cowsay.say({text: 'Hi'}));
           done();
         });
     });
