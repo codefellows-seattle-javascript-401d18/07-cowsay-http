@@ -1,8 +1,9 @@
 ## Installation
 ```
 download from Github
-npm init
+npm i
 
+FYI about what this API contains:
 //Dependencies
 npm install superagent;
 npm install uuid;

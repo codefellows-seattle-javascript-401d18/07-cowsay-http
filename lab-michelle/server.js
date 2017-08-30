@@ -54,7 +54,7 @@ const server = module.exports = http.createServer((req, res) => {
     if (req.method === 'GET' && req.url.pathname === '/cowsay') {
       if (!req.url.query.text) {
         res.writeHead(400);
-        res.writeHead(cowsay.say({ text: 'bad request' }));
+        res.writeHead(cowsay.say({text: req.url.query.text, e: 'oO', T: 'U ', f:'whale.cow' }));
         res.end();
       } else {
         res.writeHead(200, {
@@ -70,7 +70,7 @@ const server = module.exports = http.createServer((req, res) => {
   if (req.method === 'POST' && req.url.pathname === '/cowsay') {
     if (!req.url.query.text) {
       res.writeHead(400);
-      res.writeHead(cowsay.say({ text: 'bad request' }));
+      res.writeHead(cowsay.say({ text: 'bad request' , e: 'oO', T: 'U', f: 'dragon.cow'}));
       res.end();
     } else {
       res.writeHead(200, {
