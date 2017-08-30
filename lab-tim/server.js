@@ -30,29 +30,29 @@ const server = module.exports = http.createServer((req, res) => {
 
     if (req.method === 'GET' && req.url.pathname === '/cowsay') {
       let query = req.url.query;
-      if (query !== null) {
+      if (query.text) {
         res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say({text: query, e: 'oO', T: 'U '}));
+        res.write(cowsay.say({text: query.text, e: 'oO', T: 'U '}));
         res.end();
         // return;
       } else {
         res.writeHead(400, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say({text: 'bad request'}));
+        res.write(cowsay.say({text: 'bad request', e: 'DD', T: ';;'}));
         res.end();
         // return;
       }
     }
 
     if (req.method === 'POST' && req.url.pathname === '/cowsay') {
-      let query = req.url.query;
-      if (query !== null) {
+      console.log(req.body);
+      if (req.body.text) {
         res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say({text: query, e: 'oO', T: 'U '}));
+        res.write(cowsay.say({text: req.body.text, e: 'oO', T: 'U '}));
         res.end();
         // return;
       } else {
         res.writeHead(400, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say({text: 'bad request'}));
+        res.write(cowsay.say({text: 'bad request', e: 'DD', T: ';;'}));
         res.end();
         // return;
       }
