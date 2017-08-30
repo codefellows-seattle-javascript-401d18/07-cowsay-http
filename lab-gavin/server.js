@@ -63,7 +63,7 @@ const server = module.exports = http.createServer((req, res) => {
       res.writeHead(200, {
         'Content-Type': 'text/plain',
       });
-      res.write(JSON.stringify('Hello from my server!'));
+      res.write('Hello from my server!');
       res.end();
       return;
     }
@@ -81,6 +81,7 @@ const server = module.exports = http.createServer((req, res) => {
     //GET from cowsay
     if (req.method === 'GET' && req.url.pathname === '/cowsay') {
       if(req.url.query.text){
+        console.log('in get cowsay');
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.write(cowsay.say({
           text: JSON.stringify(req.url.query.text),
@@ -99,6 +100,7 @@ const server = module.exports = http.createServer((req, res) => {
 
     //POST from cowsay
     if(req.method === 'POST' && req.url.pathname === '/cowsay') {
+      console.log('inside post cowsay');
 
       res.writeHead(200, {'Content-Type': 'text/plain'});
       res.write(cowsay.say({text: JSON.stringify(req.body.text)}));
