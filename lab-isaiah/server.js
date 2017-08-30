@@ -2,7 +2,9 @@
 
 const http = require('http');
 const url = require('url');
+const cowsay = require('cowsay');
 const querystring = require('querystring');
+const PORT = process.env.PORT || 3000;
 
 // callback should be (err, body) => undefined
 const bodyParse = (req, callback) => {
@@ -54,6 +56,34 @@ const server = module.exports = http.createServer((req, res) => {
       return;
     }
 
+    if (req.method === 'GET' && req.url.pathname === '/') {
+      res.writeHead(200, {
+        'Content-Type': 'application/json',
+      });
+      res.write(cowsay.say({text: 'Welcome! Hope you\'re in a grazing moooooooood'}));
+      res.end();
+      return;
+    }
+
+    if (req.method === 'GET' && req.url.pathname === '/cowsay') {
+      if (!req.url.query.text) {
+        res.writeHead(400, {
+          'Content-Type': 'application/json',
+        });
+        res.write(cowsay.say({text: 'bad request'}));
+        res.end();
+        return;
+      } else {
+        console.log(req.url.query);
+        res.writeHead(200, {
+          'Content-Type': 'application/json',
+        });
+        res.write(cowsay.say(req.url.query));
+        res.end();
+        return;
+      }
+    }
+
     // if the pathname is /echo and a POST req send back their body as json
     if (req.method === 'POST' && req.url.pathname === '/echo') {
       res.writeHead(200, {
@@ -71,6 +101,6 @@ const server = module.exports = http.createServer((req, res) => {
 
 });
 
-server.listen(3000, () => {
-  console.log('server up :: 3000');
+server.listen(PORT, () => {
+  console.log('server up ::', PORT);
 });
