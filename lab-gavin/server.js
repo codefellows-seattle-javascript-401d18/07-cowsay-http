@@ -6,6 +6,7 @@ const querystring = require('querystring');
 const cowsay = require('cowsay');
 
 
+// callback should be (err, body) => undefined
 const bodyParse = (req, callback) => {
   if (req.method === 'POST' || req.method === 'PUT') {
     let body = '';
@@ -29,13 +30,20 @@ const server = module.exports = http.createServer((req, res) => {
       res.end();
       return;
     }
+
+    // parse the body as json
     try {
       req.body = JSON.parse(body);
     } catch (err) {
+      // if there was mal formated JSON we send back a 400 bad request
       res.writeHead(400);
       res.end();
       return;
     }
+
+    // respond with a 200 status code and yay
+
+    // if the pathname is /time and a GET req send back the date
     if (req.method === 'GET' && req.url.pathname === '/time') {
       res.writeHead(200, {
         'Content-Type': 'application/json',
@@ -71,21 +79,20 @@ const server = module.exports = http.createServer((req, res) => {
     //GET from cowsay
     if (req.method === 'GET' && req.url.pathname === '/cowsay') {
       let query = req.url.query;
-      console.log(req.body.text);
       if(query){
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.write(cowsay.say({
-          text: ('Hi Im A Cow, MOOOO'),
+          text: (req.url.query),
         }));
         res.end();
         return;
-      // } else {
-      //   res.writeHead(400, {'Content-Type': 'text/plain'});
-      //   res.write(cowsay.say({
-      //     text: `bad request`,
-      //   }));
-      //   res.end();
-      //   return;
+      } else {
+        res.writeHead(400, {'Content-Type': 'text/plain'});
+        res.write(cowsay.say({
+          text: `bad request`,
+        }));
+        res.end();
+        return;
       }
     }
 
@@ -96,6 +103,7 @@ const server = module.exports = http.createServer((req, res) => {
       res.end();
       return;
     }
+    // if the pathname is /echo and a POST req send back their body as json
     if (req.method === 'POST' && req.url.pathname === '/echo') {
       res.writeHead(200, {
         'Content-Type': 'application/json',
@@ -104,6 +112,8 @@ const server = module.exports = http.createServer((req, res) => {
       res.end();
       return;
     }
+
+    // otherwise 404
     res.writeHead(404);
     res.end();
   });
