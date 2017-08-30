@@ -145,36 +145,37 @@ describe('Testing the server file', function () {
   });
   //GET FOR /COWSAY
   describe('GET method, /cowsay endpoint', () => {
-    test('should throw error, status 400, if user types /cowsay', done => {
+    test('When passing nothing after /cowsay should return a 200 with a cow saying Hi Im A Cow', done => {
       superagent.get('localhost:3000/cowsay')
-        .set('Content-Type', 'text/plain')
-        .end((err, res) => {
-          expect(err).not.toBeNull();
-          expect(res.status).toBe(400);
-          done();
-        });
-    });
-
-    test('When passing nothing after /cowsay should return 400', done => {
-      superagent.get('localhost:3000/cowsay')
-        .type('text/plain')
-        .end((err, res) => {
-          expect(err).not.toBeNull();
-          expect(res.status).toEqual(400);
-          done();
-        });
-    });
-
-    test('Should return cow with user input', done => {
-      superagent.get('localhost:3000/cowsay')
-        .send({'text': 'Hi, Im Cow'})
         .type('application/json')
         .end((err, res) => {
-          expect(res.status).toBe(400);
-          expect(res.text).toEqual(cowsay.say({ text: 'bad request' }));
+          expect(err).toBeNull();
+          expect(res.status).toBe(200);
           done();
         });
     });
+
+    test('When passing text=hi after /cowsay should return a 200 with a cow saying Hi Im Cow', done => {
+      superagent.get('localhost:3000/cowsay')
+        .send({'text': 'Hi'})
+        .type('application/json')
+        .end((err, res) => {
+          expect(res.status).toBe(200);
+          expect(res.text).toEqual(cowsay.say({ text: 'Hi Im A Cow, MOOOO' }));
+          done();
+        });
+    });
+
+    // test('Should return cow with user input', done => {
+    //   superagent.get('localhost:3000/cowsay')
+    //     .send({'text': 'Hi, Im Cow'})
+    //     .type('application/json')
+    //     .end((err, res) => {
+    //       expect(res.status).toBe(400);
+    //       expect(res.text).toEqual(cowsay.say({ text: 'bad request' }));
+    //       done();
+    //     });
+    // });
   });
   //POST FOR /COWSAY
   describe('POST method, /cowsay endpoint', () => {
