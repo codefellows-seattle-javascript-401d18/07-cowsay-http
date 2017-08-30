@@ -24,7 +24,7 @@ Your lab directory must include
 * `README.md`
 
 #### Feature Tasks  
-* documentation: 
+* documentation:
   - Brief description of you app
   - How to install / get started with your app
   - How to interact with the endpoints
