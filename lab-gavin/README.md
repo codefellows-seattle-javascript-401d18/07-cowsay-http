@@ -29,7 +29,7 @@ Using node.js, HTTP, superagent, cowsay, and querystring I have created a Server
   + Here are a list of commands you may use with httpie.
     + `http GET localhost:3000/` will return 'Hello from my server!'   
     + `http PUT localhost:3000/` will return 'Hello from my server!'  
-    + `http GET localhost:3000/cowsay text=hi` will return a beautiful cow saying "hi".
+    + `http GET localhost:3000/cowsay?text=hi` will return a beautiful cow saying "hi".
     + `http PUT localhost:3000/cowsay text=hi` will return a beautiful cow saying "hi".
     + `http GET localhost:3000/cowsay/monkeys text=hi` will return 404.
 
