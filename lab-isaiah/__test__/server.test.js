@@ -8,10 +8,10 @@ describe('Testing the server file', function () {
     server.close(done);
   });
 
-  describe('POST method, /echo endpoint', () => {
+  describe('POST method, /cowsay endpoint', () => {
     test('should return a status code of 200', done => {
-      superagent.post('localhost:3000/echo')
-        .send({'value': 'scott-is-awesome'})
+      superagent.post('localhost:3000/cowsay')
+        .send({'value': 'Isaiah was here!'})
         .set('Content-Type', 'application/json')
         .end((err, res) => {
           expect(err).toBeNull();
@@ -21,12 +21,12 @@ describe('Testing the server file', function () {
     });
 
     test('should respond with user input', done => {
-      superagent.post('localhost:3000/echo')
-        .send({'value': 'scott'})
+      superagent.post('localhost:3000/cowsay')
+        .send({'value': 'Isaiah was here!'})
         .set('Content-Type', 'application/json')
         .end((err, res) => {
           expect(err).toBeNull();
-          expect(res.body.value).toEqual('scott');
+          expect(res.body.value).toEqual('Isaiah was here!');
           done();
         });
     });
@@ -34,7 +34,7 @@ describe('Testing the server file', function () {
 
     test('undefined endpoint', done => {
       superagent.post('localhost:3000/')
-        .send({'value': 'scott'})
+        .send({'value': 'Isaiah was here!'})
         .set('Content-Type', 'application/json')
         .end((err, res) => {
           expect(err).not.toBeNull();
@@ -44,9 +44,9 @@ describe('Testing the server file', function () {
     });
   });
 
-  describe('GET method, /time endpoint', () => {
+  describe('GET method, /cowsay endpoint', () => {
     test('should return a status code of 200', done => {
-      superagent.get('localhost:3000/time')
+      superagent.get('localhost:3000/cowsay')
         .set('Content-Type', 'application/json')
         .end((err, res) => {
           expect(err).toBeNull();
@@ -56,7 +56,7 @@ describe('Testing the server file', function () {
     });
 
     test('should respond with the current date', done => {
-      superagent.get('localhost:3000/time')
+      superagent.get('localhost:3000/cowsay')
         .type('application/json')
         .end((err, res) => {
           expect(err).toBeNull();

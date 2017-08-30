@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "cowsay": "^1.2.1",
+    "nodemon": "^1.11.0",
     "superagent": "^3.6.0",
     "uuid": "^3.1.0"
   }
