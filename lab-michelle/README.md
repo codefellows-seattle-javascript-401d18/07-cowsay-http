@@ -13,3 +13,11 @@ npm install cowsay;
 npm install eslint
 npm install jest
 ```
+## Stuff to Know
+When you make a request (GET, PUT, POST, DELETE), you need to specify the query string (text following ?=text in our URL).
+
+Example:
+```
+GET http://localhost/cowsay?=text:hello
+```
+There's probably a better way to do this, but hey, it's what we came up with!

@@ -3,6 +3,8 @@
 const http = require('http');
 const url = require('url');
 const querystring = require('querystring');
+const cowsay = require('cowsay');
+const PORT = 3000 || process.env.PORT;
 
 // callback should be (err, body) => undefined
 const bodyParse = (req, callback) => {
@@ -39,34 +41,65 @@ const server = module.exports = http.createServer((req, res) => {
     }
     // respond with a 200 status code and yay
 
-    // if the pathname is / and a GET req send back "hello from the server"
-    if (req.method === 'GET' && req.url.pathname === '/') {
+    // if the pathname is / for ALL send back "hello from the server"
+    if (req.url.pathname === '/') {
       res.writeHead(200, {
         'Content-Type': 'application/json',
       });
-      res.write(JSON.stringify({
-        message: 'hello from my server',
-      }));
+      res.write(JSON.stringify('hello from my server'));
       res.end();
       return;
     }
-    //
-    // // if the pathname is /echo and a POST req send back their body as json
-    // if (req.method === 'POST' && req.url.pathname === '/echo') {
-    //   res.writeHead(200, {
-    //     'Content-Type': 'application/json',
-    //   });
-    //   res.write(JSON.stringify(req.body));
-    //   res.end();
-    //   return;
-    // }
 
-    // otherwise 404
-    res.writeHead(404);
-    res.end();
+    if (req.method === 'GET' && req.url.pathname === '/cowsay') {
+      if (!req.url.query.text) {
+        res.writeHead(400);
+        res.writeHead(cowsay.say({ text: 'bad request' }));
+        res.end();
+      } else {
+        res.writeHead(200, {
+          'Content-Type': 'application/json',
+        });
+        res.write(cowsay.say(req.url.query));
+        res.end();
+        return;
+      }
+    }
   });
 
+  if (req.method === 'POST' && req.url.pathname === '/cowsay') {
+    if (!req.url.query.text) {
+      res.writeHead(400);
+      res.writeHead(cowsay.say({ text: 'bad request' }));
+      res.end();
+    } else {
+      res.writeHead(200, {
+        'Content-Type': 'application/json',
+      });
+      res.write(cowsay.say(req.url.query));
+      res.end();
+      return;
+    }
+  }
 });
+
+//
+// // if the pathname is /echo and a POST req send back their body as json
+// if (req.method === 'POST' && req.url.pathname === '/echo') {
+//   res.writeHead(200, {
+//     'Content-Type': 'application/json',
+//   });
+//   res.write(JSON.stringify(req.body));
+//   res.end();
+//   return;
+// }
+
+// otherwise 404
+//     res.writeHead(404);
+//     res.end();
+//   });
+//
+// });
 
 server.listen(3000, () => {
   console.log('server up :: 3000');
