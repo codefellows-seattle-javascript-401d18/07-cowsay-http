@@ -1,11 +1,20 @@
 
+# Description
+
+
+# Installation
+
+
+# Usage
 
 
 
 
 
 
-Cowsay Docs 
+
+*move docs as readme is constructed
+Cowsay Docs
 https://www.npmjs.com/package/
 
 SuperAgent Docs
