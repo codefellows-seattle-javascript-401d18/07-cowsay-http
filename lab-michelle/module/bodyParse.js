@@ -4,9 +4,8 @@
 //have all the things, bodyParser
 const http = require('http');
 const url = require('url');
-const querystring = require('querystring');
-const cowsay = require('cowsay');
-const bodyParser = require('../module/bodyParse.js');
+// const querystring = require('querystring');
+// const cowsay = require('cowsay');
 
 const bodyParse = (req, callback) => {
   if (req.method === 'POST' || req.method === 'PUT') {
