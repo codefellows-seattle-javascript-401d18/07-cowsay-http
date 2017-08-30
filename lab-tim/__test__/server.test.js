@@ -33,7 +33,7 @@ describe('Testing the server file', function () {
         });
     });
 
-    test('POST on /cowsay endpoint -  should return', done => {
+    test('POST on /cowsay endpoint -  should return cowsay dragon message', done => {
       superagent.post('localhost:3000/cowsay')
         .send({'text': 'hello'})
         .set('Content-Type', 'application/json')
@@ -72,7 +72,6 @@ describe('Testing the server file', function () {
       superagent.get('localhost:3000/cowsay?text=hello')
         .set('Content-Type', 'application/json')
         .end((err, res) => {
-          // console.log(err);
           expect(err).toBeNull();
           expect(res.status).toBe(200);
           done();
@@ -83,21 +82,18 @@ describe('Testing the server file', function () {
       superagent.get('localhost:3000/cowsay?name=hello')
         .set('Content-Type', 'application/json')
         .end((err, res) => {
-          // console.log(err);
           expect(err).not.toBeNull();
           expect(res.status).toBe(400);
           done();
         });
     });
 
-    test('GET on /cowsay endpoint - should return', done => {
+    test('GET on /cowsay endpoint - should return cowsay dragon message', done => {
       superagent.get('localhost:3000/cowsay?text=hello')
         .set('Content-Type', 'application/json')
         .end((err, res) => {
           expect(err).toBeNull();
           expect(res.text).toEqual(cowsay.say({text: 'hello', f: 'dragon'}));
-          // expect(res).toHaveProperty('e');
-          // expect(res).toHaveProperty('T');
           done();
         });
     });

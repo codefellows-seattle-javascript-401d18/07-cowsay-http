@@ -34,12 +34,12 @@ const server = module.exports = http.createServer((req, res) => {
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.write(cowsay.say({text: query.text, f: 'dragon'}));
         res.end();
-        // return;
+        return;
       } else {
         res.writeHead(400, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say({text: 'bad request', f: 'dragon'}));
+        res.write(cowsay.say({text: 'bad request', f: 'sheep'}));
         res.end();
-        // return;
+        return;
       }
     }
 
@@ -49,12 +49,12 @@ const server = module.exports = http.createServer((req, res) => {
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.write(cowsay.say({text: req.body.text, f: 'dragon'}));
         res.end();
-        // return;
+        return;
       } else {
         res.writeHead(400, {'Content-Type': 'text/plain'});
-        res.write(cowsay.say({text: 'bad request', f: 'dragon'}));
+        res.write(cowsay.say({text: 'bad request', f: 'sheep'}));
         res.end();
-        // return;
+        return;
       }
     }
 
@@ -62,14 +62,14 @@ const server = module.exports = http.createServer((req, res) => {
       res.writeHead(200, {'Content-Type': 'text/plain'});
       res.write('hello from my server!');
       res.end();
-      // return;
+      return;
     }
 
     if (req.method === 'POST' && req.url.pathname === '/') {
       res.writeHead(200, {'Content-Type': 'text/plain'});
       res.write('hello from my server!');
       res.end();
-      // return;
+      return;
     }
 
     // otherwise 404
