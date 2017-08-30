@@ -163,12 +163,13 @@ describe('Testing the server file', function () {
         });
     });
 
-    test('Should return 404 when user types bad path /cowsay/hi', done => {
-      superagent.get('localhost:3000/monkey')
-        .set('Content-Type', 'text/plain')
+    test('Should return cow with user input', done => {
+      superagent.get('localhost:3000/cowsay')
+        .send({'text': 'Hi, Im Cow'})
+        .type('application/json')
         .end((err, res) => {
-          expect(err).not.toBeNull();
-          expect(res.status).toBe(404);
+          // expect(res.status).toBe(200);
+          expect(res.text).toEqual(cowsay.say({ text: 'bad request' }));
           done();
         });
     });
@@ -190,7 +191,7 @@ describe('Testing the server file', function () {
         .send({'text': 'Hi, Im Cow'})
         .type('application/json')
         .end((err, res) => {
-          expect(res.text).toEqual(cowsay.say({ text: 'Hi, Im Cow' }));
+          expect(res.text).toEqual(cowsay.say({ text: JSON.stringify('Hi, Im Cow') }));
           expect(res.status).toEqual(200);
           done();
         });
