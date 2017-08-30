@@ -39,7 +39,7 @@ describe('Testing the server file', function () {
         .set('Content-Type', 'application/json')
         .end((err, res) => {
           expect(err).toBeNull();
-          expect(res.text).toEqual(cowsay.say({text: 'hello', e: 'oO', T: 'U '}));
+          expect(res.text).toEqual(cowsay.say({text: 'hello', f: 'dragon'}));
           done();
         });
     });
@@ -95,7 +95,7 @@ describe('Testing the server file', function () {
         .set('Content-Type', 'application/json')
         .end((err, res) => {
           expect(err).toBeNull();
-          expect(res.text).toEqual(cowsay.say({text: 'hello', e: 'oO', T: 'U '}));
+          expect(res.text).toEqual(cowsay.say({text: 'hello', f: 'dragon'}));
           // expect(res).toHaveProperty('e');
           // expect(res).toHaveProperty('T');
           done();
