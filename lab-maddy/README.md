@@ -11,12 +11,13 @@ Brief description of you app
   - _note: use a code block to show the HTTPie and response format_
 
 
-
   - npm install- DONE
-  - npm install httpie
+  - npm install httpie -DONE
   - npm install superagent
   - npm install uuid ???
-  - npm install cowsay- DONE
-  - npm install jest
+  - npm install -g cowsay- DONE
+  - npm install -D jest
+    - npm test
   - node server.js
-  - nc localhost 3000
+    - nc localhost 3000
+  -

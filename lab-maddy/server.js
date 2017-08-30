@@ -4,6 +4,8 @@ const http = require('http');
 const url = require('url');
 const queryString = require('querystring');//breaks down requests, the url, the objects within. knocks the url down into objects of its components. one of those is the query string.
 //codefellows.com/myapp?name=scott&ta=allie...
+
+const cowsay = require('cowsay');
 const PORT = process.env.PORT || 3000;
 
 const bodyParse = function(req, callback){
@@ -19,14 +21,14 @@ const bodyParse = function(req, callback){
   }
 };
 
-const server = module.exports = http.createServer((req, res)=> { 
+const server = module.exports = http.createServer((req, res)=> {
 // see Class: http.Server in docs
 //listen, open, respond, close
 //Class: http.IncomingMessage ....is the request object
   console.log('pre parse', req.url);
   req.url = url.parse(req.url); //looks like the cf example above. the js object. breaks it down into protocal, path, domain
-  console.log(req.url);
-  console.log(req.url.query);
+  // console.log(req.url);
+  // console.log(req.url.query);
   req.url.query = queryString.parse(req.url.query);
   // console.log(req.url.query)
 
@@ -43,31 +45,33 @@ const server = module.exports = http.createServer((req, res)=> {
       res.writeHead(400);//write out a header, return the function
       res.end();
       return;
-    } //if there's an error in the try, if there's in issue, catch it with this block.
+    }
 
-    if(req.method ==='GET' && req.url.pathname === '/time'){ //access a property to get a value. creating an end point for a get request.
+    if(req.method ==='GET' && req.url.pathname === '/cowsay'){ //access a property to get a value. creating an end point for a get request.
       res.writeHead(200, {
-        'Content-Type': 'text/plain'
+        'Content-Type': 'text/plain',
       });
-      res.write(JSON.stringify({
-        now: Date.now(),
-        date: new Date(), //in terminal-- http GET :3000/time
-      }));
+      res.write(cowsay.say(req.url.query));//in terminal-- http GET :3000/time
       res.end();
       return;
     }
-    if(req.method === 'POST' && req.url.pathname === '/echo'){
-      res.writeHead(200, {//take hte data that's been stored in req.body (a js object)
-        'Content-Type': 'text/plain'
-      });
-      res.write(JSON.stringify(req.body));
-      res.end();
-      return;
-    }
-    res.writeHead(404);//we need to capture any other occurance of pass through. what if we don't hit one of these end points.
+    res.writeHead(400);
     res.end();
   });
 });
+//
+//     if(req.method === 'POST' && req.url.pathname === '/cowsay'){
+//       res.writeHead(200, {//take hte data that's been stored in req.body (a js object)
+//         'Content-Type': 'text/plain',
+//       });
+//       res.write(JSON.stringify(req.body));
+//       res.end();
+//       return;
+//     }
+//     res.writeHead(404);//we need to capture any other occurance of pass through. what if we don't hit one of these end points.
+//     res.end();
+//   });
+// });
 
 // in terminal-- npm run start:watch
 
@@ -75,6 +79,6 @@ const server = module.exports = http.createServer((req, res)=> {
 
 //terminal- npm super agent
 
+// cowsay.think();
 
-
-server.listen(PORT, ()=> console.log(`listening on: ${PORT}`))
+server.listen(PORT, ()=> console.log(`listening on: ${PORT}`));
