@@ -24,14 +24,14 @@ Your lab directory must include
 * `README.md`
 
 #### Feature Tasks  
-* documentation: 
+* documentation: X
   - Brief description of you app
   - How to install / get started with your app
   - How to interact with the endpoints
     - Sample requests and example responses
     - _note: use a code block to show the HTTPie and response format_
-* create an HTTP Server using the NodeJS `http` module
-* create a *custom* body parsing module that is used for parsing the body of all **POST** and **PUT** requests
+* create an HTTP Server using the NodeJS `http` module X
+* create a *custom* body parsing module that is used for parsing the body of all **POST** and **PUT** requests X
 * for **ALL** requests made to `/`, the server should respond with the following:
   * a header containing `Content-Type: text/plain`
   * a status code of **200**
