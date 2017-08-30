@@ -78,14 +78,16 @@ const server = module.exports = http.createServer((req, res) => {
 
     //GET from cowsay
     if (req.method === 'GET' && req.url.pathname === '/cowsay') {
-      let query = req.url.query;
+      let query = req.url.query.text;
+      console.log(query);
       if(query){
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.write(cowsay.say({
-          text: (req.url.query),
+          text: (req.url.query.text),
         }));
         res.end();
         return;
+
       } else {
         res.writeHead(400, {'Content-Type': 'text/plain'});
         res.write(cowsay.say({
