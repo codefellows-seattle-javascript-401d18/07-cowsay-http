@@ -4,14 +4,13 @@ const server = require('../server.js');
 const superagent = require('superagent');
 
 
-//
 describe('Testing the server file', function () {
   afterAll((done) => {
     server.close(done);
   });
 
   //POST
-  describe('POST method, /echo endpoint', () => {
+  describe('POST method, /cowsay endpoint', () => {
     test('should return a status code of 200', done => {
       superagent.post('localhost:3000/echo')
         .send('hello from my server!')

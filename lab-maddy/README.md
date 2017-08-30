@@ -21,3 +21,12 @@ Brief description of you app
   - node server.js
     - nc localhost 3000
   -
+
+- TO GET COW pic in terminal type-- curl http://localhost:3000/cowsay?text=hello
+- To GET bad request confirmation type-- http GET :3000/cowsay
+  - Then the following bad request info is displayed in terminal:
+    HTTP/1.1 400 Bad Request
+    Connection: keep-alive
+    Content-Type: text/plain
+    Date: Wed, 30 Aug 2017 01:02:43 GMT
+    Transfer-Encoding: chunked

@@ -47,18 +47,28 @@ const server = module.exports = http.createServer((req, res)=> {
       return;
     }
 
-    if(req.method ==='GET' && req.url.pathname === '/cowsay'){ //access a property to get a value. creating an end point for a get request.
-      res.writeHead(200, {
-        'Content-Type': 'text/plain',
-      });
-      res.write(cowsay.say(req.url.query));//in terminal-- http GET :3000/time
-      res.end();
-      return;
+    if(req.method === 'GET' && req.url.pathname === '/cowsay') {
+      // console.log(JSON.stringify(req.url.query));
+      if(!req.url.query.text) {
+        res.writeHead(400, {
+          'Content-Type': 'text/plain',
+        });
+        res.write(cowsay.say({ text: 'bad request'}));
+        // console.log(body);
+        res.end();
+        return;
+      } else {
+        res.writeHead(200, {
+          'Content-Type': 'text/plain',
+        });
+        res.write(cowsay.say(req.url.query));
+        res.end();
+        return;
+      }
     }
-    res.writeHead(400);
-    res.end();
   });
 });
+
 //
 //     if(req.method === 'POST' && req.url.pathname === '/cowsay'){
 //       res.writeHead(200, {//take hte data that's been stored in req.body (a js object)
