@@ -26,16 +26,13 @@ FYI about what this API contains:
 GET/POST/PUT/DELETE http://localhost:3000/
 //Returns status code of 200 & the message "hello from my server"
 ```
-Using HTTP methods GET, PUT, POST, DELETE, you will need to specify the query string (text following ?=text in our URL).
+Using HTTP methods GET & POST you can make your cow say something
 ```
 GET http://localhost:3000/cowsay?=text:yourtext
 POST http://localhost:3000/cowsay?=text:yourtext
 //Either method will return a cow saying your message in the terminal in which your command line HTTP client is working. //
 
-//Note that errors returned from these will return a cow saying 'bad request'//
-
 ```
-There's probably a better way to do this, but hey, it's what we came up with!
 
 ## Seeing a cow
 Make sure your server is running
