@@ -4,7 +4,7 @@ const http = require('http');
 const url = require('url').parse;
 const querystring = require('querystring').parse;
 const cowsay = require('cowsay');
-const bodyParser = require('../module/bodyParse.js');
+const bodyParser = require('./module/bodyParse.js');
 // const PORT = 3000 || process.env.PORT;
 
 
@@ -44,7 +44,7 @@ const server = module.exports = http.createServer((req, res) => {
     }
 
     if (req.method === 'GET' && req.url.pathname === '/cowsay') {
-      res.writeHead(400, {'Content-Type': 'text/plain'});
+      res.writeHead(200, {'Content-Type': 'text/plain'});
       let cow = cowsay.say(
         {
           text: req.url.query.text,
@@ -65,6 +65,7 @@ const server = module.exports = http.createServer((req, res) => {
       res.end();
       return;
     }
+
     //the otherwise 400 - instead of writing in 400 for every one like I did, we do kind of a giant if/else //
 
     res.writeHead(400, {'Content-Type': 'text/plain'});
