@@ -2,10 +2,11 @@
 
 const server = require('../server.js');
 const superagent = require('superagent');
-
+require('jest');
 describe('Testing the server file', function () {
   afterAll((done) => {
-    server.close(done);
+    server.close();
+    done();
   });
 
   describe('POST method, / endpoint', () => {
@@ -25,8 +26,8 @@ describe('Testing the server file', function () {
       superagent.get('localhost:3000/')
       .set('Content-Type', 'application/json')
       .end((err, res) => {
-        expect(err).not.toBeNull();
-        expect(res.status).toBe(400);
+        expect(err).toBeNull();
+        expect(res.status).toBe(200);
         done();
       });
     });
@@ -36,8 +37,8 @@ describe('Testing the server file', function () {
       .send({'value': 'scott'})
       .set('Content-Type', 'application/json')
       .end((err, res) => {
-        expect(err).not.toBeNull();
-        expect(res.status).toBe(404);
+        expect(err).toBeNull();
+        expect(res.status).toBe(200);
         done();
       });
     });
@@ -51,4 +52,23 @@ describe('Testing the server file', function () {
       });
     });
   });
+
+  // describe('requests to any other route', () => {
+  //   describe('correctly formatted', () => {
+  //     test('a GET request', done => {
+  //       done();
+  //     });
+  //     test('a POST request', done => {
+  //       done();
+  //     });
+  //   });
+  //   describe('incorrectly formatted', () => {
+  //     test('a GET request', done => {
+  //       done();
+  //     });
+  //     test('a POST request', done => {
+  //       done();
+  //     });
+  //   });
+  // });
 });

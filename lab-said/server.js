@@ -13,7 +13,10 @@ const bodyParse = function(req, callback){
     req.on('data', buffer => {
       body += buffer.toString();
     });
-    req.on('end', () => callback(null, body));    req.on('error', err => callback(err));
+    req.on('end', () =>
+      callback(null, body));
+    req.on('error', err =>
+      callback(err));
   } else {
     callback(null, '{}');
   }
@@ -21,7 +24,8 @@ const bodyParse = function(req, callback){
 
 const server = module.exports = http.createServer((req, res)=> {
   console.log('pre parse', req.url);
-  req.url = url.parse(req.url);   req.url.query = queryString.parse(req.url.query);
+  req.url = url.parse(req.url);
+  req.url.query = queryString.parse(req.url.query);
 
 
   bodyParse(req, (err, body)=> {
@@ -35,6 +39,13 @@ const server = module.exports = http.createServer((req, res)=> {
       req.body = JSON.parse(body);
     } catch(e) {
       res.writeHead(400);
+      res.end();
+      return;
+    }
+
+    if(req.url.pathname === '/') {
+      res.writeHead(200, {'Content-Type': 'text/plain'});
+      res.write('Hello from my server');
       res.end();
       return;
     }
@@ -61,7 +72,7 @@ const server = module.exports = http.createServer((req, res)=> {
       res.writeHead(200, {
         'Content-Type': 'text/plain',
       });
-      res.write(JSON.stringify(req.body));
+      res.write(JSON.stringify(req.body.text));
       res.end();
 
     } else{
