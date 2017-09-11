@@ -1,3 +1,5 @@
+'use strict'
+
 const http = require('http')
 const url = require('url')
 const querystring = require('querystring')
@@ -32,6 +34,8 @@ const server = module.exports = http.createServer((req, res) => {
       res.end()
       return
     }
+
+    ///TIME
     if (req.method === 'GET' && req.url.pathname === '/time') {
       res.writeHead(200, {
         'Content-Type': 'application/json'
@@ -43,6 +47,25 @@ const server = module.exports = http.createServer((req, res) => {
       res.end()
       return
     }
+
+    ///
+    if (req.method === 'GET' && req.url.pathname === '/'){
+      res.writeHead(200, {
+        'Content-Type': 'text/plain'
+      })
+      res.write('Please leave!')
+      res.end()
+      return
+    }
+
+    if (req.method === 'POST' && req.url.pathname === '/') {
+      res.writeHead(200, {'Content-Type': 'text/plain'});
+      res.write('Please leave!');
+      res.end();
+      return;
+    }
+
+    ///ECHO
     if (req.method === 'POST' && req.url.pathname === '/echo') {
       res.writeHead(200, {
         'Content-Type': 'application/json'
@@ -50,6 +73,39 @@ const server = module.exports = http.createServer((req, res) => {
       res.write(JSON.stringify(req.body))
       res.end()
       return
+    }
+
+    ///COWSAY
+    if (req.method === 'GET' && req.url.pathname === '/cowsay') {
+      let query = req.url.query.text
+      if(query){
+        res.writeHead(200, {'Content-Type': 'text/plain'})
+        res.write(cowsay.say({text: (req.url.query.text), f: 'beavis.zen'}))
+        res.end()
+        return
+      } else {
+        res.writeHead(400, {'Content-Type': 'text/plain'})
+        res.write(cowsay.say({
+          text: 'bad request',
+          f: 'beavis.zen'
+        }))
+        res.end()
+        return
+      }
+    }
+
+    if (req.method === 'POST' && req.url.pathname === '/cowsay') {
+      if (req.body.text) {
+        res.writeHead(200, {'Content-Type': 'text/plain'})
+        res.write(cowsay.say({text: req.body.text, f: 'beavis.zen'}))
+        res.end()
+        return
+      } else {
+        res.writeHead(400, {'Content-Type': 'text/plain'})
+        res.write(cowsay.say({text: 'bad request', f: 'beavis.zen'}))
+        res.end()
+        return
+      }
     }
     res.writeHead(404)
     res.end()
