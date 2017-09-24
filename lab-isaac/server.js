@@ -81,8 +81,18 @@ const server = module.exports = http.createServer((req, res) => {
           * a body including the value returned from `cowsay.say({ text: 'bad request' })`*/
 
     if(req.method === 'POST' && req.url.pathname === '/cowsay') {
-      console.log(req.url.query);
-      if(!req.url.query.text) {
+      try {
+        req.body = JSON.parse(body);
+      } catch(err) {
+        //if there was malformatted JSON, we send back a 400 bad request
+        res.writeHead(400, {
+          'Content-Type': 'text/plain',
+        });
+        res.write(cowsay.say({ text: 'bad request'}));
+        res.end();
+        return;
+      }
+      if(!req.body) {
         res.writeHead(400, {
           'Content-Type': 'text/plain',
         });
@@ -93,7 +103,7 @@ const server = module.exports = http.createServer((req, res) => {
         res.writeHead(200, {
           'Content-Type': 'text/plain',
         });
-        res.write(cowsay.say(req.url.query));
+        res.write(cowsay.say(req.body));
         res.end();
         return;
       }
@@ -101,14 +111,6 @@ const server = module.exports = http.createServer((req, res) => {
 
 
     //parse the body as json
-    try {
-      req.body = JSON.parse(body);
-    } catch(err) {
-      //if there was malformatted JSON, we send back a 400 bad request
-      res.writeHead(400);
-      res.end();
-      return;
-    }
   });
 });
 
