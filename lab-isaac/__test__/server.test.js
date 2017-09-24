@@ -46,73 +46,53 @@ describe('Testing the server file', function () {
           done();
         });
     });
+    test('should return a 400 status code with text', done => {
+      superagent.get('localhost:3000/cowsay')
+        // .send({'text': 'Hello World!'})
+        .set('Content-Type', 'text/plain')
+        .end((err, res) => {
+          expect(res.status).toBe(400);
+          expect(res.text).toContain('bad request');
+          done();
+        });
+    });
   });
-  // describe('POST method, /echo endpoint', () => {
-  //   test('should return a status code of 200', done => {
-  //     superagent.post('localhost:3000/echo')
-  //       .send({'value': 'scott-is-awesome'})
-  //       .set('Content-Type', 'application/json')
-  //       .end((err, res) => {
-  //         expect(err).toBeNull()
-  //         expect(res.status).toBe(200)
-  //         done()
-  //       })
-  //   })
-  //
-  //   test('should respond with user input', done => {
-  //     superagent.post('localhost:3000/echo')
-  //       .send({'value': 'scott'})
-  //       .set('Content-Type', 'application/json')
-  //       .end((err, res) => {
-  //         expect(err).toBeNull()
-  //         expect(res.body.value).toEqual('scott')
-  //         done()
-  //       })
-  //   })
-  //
-  //
-  //   test('undefined endpoint', done => {
-  //     superagent.post('localhost:3000/')
-  //       .send({'value': 'scott'})
-  //       .set('Content-Type', 'application/json')
-  //       .end((err, res) => {
-  //         expect(err).not.toBeNull()
-  //         expect(res.status).toBe(404)
-  //         done()
-  //       })
-  //   })
-  // })
-  //
-  // describe('GET method, /time endpoint', () => {
-  //   test('should return a status code of 200', done => {
-  //     superagent.get('localhost:3000/time')
-  //       .set('Content-Type', 'application/json')
-  //       .end((err, res) => {
-  //         expect(err).toBeNull()
-  //         expect(res.status).toBe(200)
-  //         done()
-  //       })
-  //   })
-  //
-  //   test('should respond with the current date', done => {
-  //     superagent.get('localhost:3000/time')
-  //       .type('application/json')
-  //       .end((err, res) => {
-  //         expect(err).toBeNull()
-  //         expect(res.body).toHaveProperty('now')
-  //         expect(res.body).toHaveProperty('date')
-  //         done()
-  //       })
-  //   })
-  //
-  //   test('undefined endpoint', done => {
-  //     superagent.get('localhost:3000/')
-  //       .set('Content-Type', 'application/json')
-  //       .end((err, res) => {
-  //         expect(err).not.toBeNull()
-  //         expect(res.status).toBe(404)
-  //         done()
-  //       })
-  //   })
-  // })
+  describe('POST method, /cowsay endpoint', () => {
+    test('POST with properly formatted body should return 200', done => {
+      superagent.post(':3000/cowsay')
+        .set('Content-Type', 'application/json')
+        .send('{"text": "hi there my friend"}')
+        .end((err, res) => {
+          expect(res.status).toBe(200);
+          done();
+        });
+    });
+    test('properly formatted post should return correct res text', done => {
+      superagent.post(':3000/cowsay')
+        .set('Content-Type', 'application/json')
+        .send('{"text": "hi there my friend"}')
+        .end((err, res) => {
+          expect(res.text).toContain('hi there my friend');
+          done();
+        });
+    });
+    test('malformatted POST should return 400', done => {
+      superagent.post(':3000/cowsay')
+        .set('Content-Type', 'application/json')
+        .send('hi there my friend')
+        .end((err, res) => {
+          expect(res.status).toBe(400);
+          done();
+        });
+    });
+    test('malformatted POST should return bad request', done => {
+      superagent.post(':3000/cowsay')
+        .set('Content-Type', 'application/json')
+        .send('{"hi there friend"}')
+        .end((err, res) => {
+          expect(res.text).toContain('bad request');
+          done();
+        });
+    });
+  });
 });
